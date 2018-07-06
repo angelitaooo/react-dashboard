@@ -1,18 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+    categories: [
+      {id: 'photos'}, 
+      {id: 'albums' }, 
+      {id: 'comments'},
+      {id: 'posts'}
+     ],
+    categoryInfo: [
+      {id: 'photos', title: 'item1' }, 
+      {id:'albums', title: 'item2' },
+      {id:'comments', title: 'item3' },
+      {id:'albums', title: 'item4' }
+    ]
+  }
+
+  renderCategories = () => {
+   return this.state.categories.map((category, index) => <li onClick={this.renderCategoryInfo} key={index}>#{category.id}</li>);
+  }
+
+  renderCategoryInfo = () => {
+    console.log(this.state.categoryInfo);
+  }
+
+
+
+  // componentDidMount() {
+  //   this.renderCategories();
+  // }
+
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="categories">
+          <ul>{this.renderCategories()}</ul>
+        </div>
+        <div className="category-info"></div>
       </div>
     );
   }
