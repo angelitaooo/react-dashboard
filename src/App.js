@@ -9,36 +9,33 @@ class App extends Component {
       {id: 'comments'},
       {id: 'posts'}
      ],
-    categoryInfo: [
-      {id: 'photos', title: 'item1' }, 
-      {id:'albums', title: 'item2' },
-      {id:'comments', title: 'item3' },
-      {id:'albums', title: 'item4' }
-    ]
+    categoryInfo: []
   }
 
   renderCategories = () => {
    return this.state.categories.map((category, index) => <li onClick={this.renderCategoryInfo} key={index}>#{category.id}</li>);
   }
 
-  renderCategoryInfo = () => {
-    console.log(this.state.categoryInfo);
+  getCategoryInfo = (category) => {
+    const postUrl = `https://jsonplaceholder.typicode.com/${category}`;
+    fetch(postUrl)
+    .then(response => response.json())
+    .then(info => this.setState({categoryInfo: info}))
   }
 
-
-
-  // componentDidMount() {
-  //   this.renderCategories();
-  // }
-
+  renderCategoryInfo = () => {
+    return this.state.categoryInfo.map(category => <p>{category.title}</p>);
+  }
 
   render() {
+   
     return (
       <div className="App">
         <div className="categories">
           <ul>{this.renderCategories()}</ul>
         </div>
-        <div className="category-info"></div>
+        <div className="category-info">{this.renderCategoryInfo()}</div>
+        <button onClick={() => this.getCategoryInfo('posts')}>posts</button>
       </div>
     );
   }
